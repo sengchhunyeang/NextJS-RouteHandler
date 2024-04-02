@@ -5,12 +5,21 @@ const prisma = new PrismaClient()
 export async function GET(request, { params: { id } }) {
     const getCustomer = await prisma.orders.findMany({
         where: {
-            customer_id:parseInt(id),
+            customer_id: parseInt(id),
         }
     });
-    return NextResponse.json({
-        status: 200,
-        message: "Get Customer byId: " + id + " Successfully",
-        data: getCustomer
-    });
+    if (getCustomer.length === 0) {
+        return NextResponse.json({
+            status: 404,
+            message: "Customer not found Please try again"
+        });
+    } else {
+        return NextResponse.json({
+            status: 200,
+            message: "Get Customer byId: " + id + " Successfully",
+            data: getCustomer
+        })
+    }
+
+
 }

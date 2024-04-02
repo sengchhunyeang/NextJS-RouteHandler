@@ -2,12 +2,20 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 const prisma = new PrismaClient();
 export async function GET() {
-    const getCustomers = await prisma.orders.findMany();
+    try{
+        const getCustomers = await prisma.orders.findMany();
     return NextResponse.json({
         status: 200,
         message: "Get All Customers Successfully",
         payload: getCustomers,
     })
+    }catch(error){
+        return NextResponse.json({
+            status: 500,
+            message: "Get All Customers Failed",
+            payload: error,
+        })
+    }
 }
 // Post data Order
 export async function POST(req) {
