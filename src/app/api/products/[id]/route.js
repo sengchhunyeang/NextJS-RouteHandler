@@ -27,6 +27,7 @@ export async function GET(request, { params: { id } }) {
         })
 }
 }
+// Update Products
 export async function PUT(request,{params:{id}}){
     const {category_id,product_name,price}=await request.json();
     const updateProduct=await prisma.products.update({
